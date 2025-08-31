@@ -7,9 +7,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # App setup
 # ----------------------------------------------------
 app = Flask(__name__)
-app.secret_key = "change_this_in_production_please"  # ⚠️ change for real use
-DB_PATH = "database.db"
-
+app.secret_key = os.environ.get("SECRET_KEY", "dev_secret_key")  # ⚠️ change for real use
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "database.db")
 # ----------------------------------------------------
 # DB helpers & bootstrap/migration
 # ----------------------------------------------------
@@ -389,3 +389,4 @@ def history():
 # ----------------------------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
